@@ -157,6 +157,7 @@ if __name__ == "__main__" :
         for p in data:
             text_org = p['sentence']
             sentence = p['sentence']
+            image_name =p["image_file_name"] 
 
             for question_cat in Settings.QUESTION_CAT_LIST:
                 question = p[question_cat]
@@ -174,6 +175,7 @@ if __name__ == "__main__" :
                         
                         print('question', question)
                         missing_word = question["base"]
+                        
                         
 
                         for word in sentence.split():   
@@ -201,10 +203,10 @@ if __name__ == "__main__" :
                                 correct_answer = i
                             
                         print ('answers', answers)
-                        image = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, 'missing_word_definition', filename_generator(1))
+                        image = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, 'missing_word_definition', image_name)
                         image.question_generator(correct_answer)
                       
-                        image_a = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, 'missing_word_definition', filename_generator(0))
+                        image_a = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, 'missing_word_definition', image_name)
                         image_a.answer_generator(correct_answer)
 
             time.sleep(1)
