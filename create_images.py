@@ -10,6 +10,20 @@ import re
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from datetime import datetime
 
+def filename_generator(question):
+    if question:
+        suffix = "_question"
+    else:
+        suffix = "_answer"
+
+    file_name = '_' + \
+        str(datetime.now().strftime("%Y-%m-%d_%Hh%Mm%Ss")) + suffix + '.jpg'
+    return file_name
+
+def convert_to_words(lst):
+    return ([i for item in lst for i in item.split()])
+
+
 class CreateImage:
     """ This class generates question/answer Image Sets """
     
@@ -29,16 +43,7 @@ class CreateImage:
         self.image_file_name = image_file_name
         self.img, self.save_image = self.random_background_generator()
 
-    def filename_generator(self, question):
-        if question:
-            suffix = "_question"
-        else:
-            suffix = "_answer"
 
-        file_name = 'insta_post_' + \
-            str(datetime.now().strftime("%Y-%m-%d_%Hh%Mm%Ss")) + suffix + '.jpg'
-        return file_name
-    
     @staticmethod
     def random_background_generator():
         background = Image.open('background_' + str(random.randint(1, 2)) + '.jpg')           
@@ -137,14 +142,14 @@ class CreateImage:
         self.img = self.first_line("question")
         self.img = self.question_or_answer_line( "question")
         self.img = self.option_lines("question")
-        self.save_image.save('/Users/erdemisbilen/Desktop/deneme/'  +  self.image_file_name.replace(".", "__" + self.question_category + "__" +  "--" + self.missing_word + "--" + "___" + str(correct_answer) + "___missing_word_question.") , quality=60)
+        self.save_image.save('/data/'  +  self.image_file_name.replace(".", "__" + self.question_category + "__" +  "--" + self.missing_word + "--" + "___" + str(correct_answer) + "___missing_word_question.") , quality=70)
     
     def answer_generator(self, correct_answer):
         self.img = self.first_line("answer")
         self.img = self.question_or_answer_line( "answer")
         self.img = self.option_lines("answer")
         #self.img = self.meaning_text_line()
-        self.save_image.save('/Users/erdemisbilen/Desktop/deneme/'  +  self.image_file_name.replace(".", "__" + self.question_category + "__" + "--" + self.missing_word + "--" + "___" + str(correct_answer) + "___missing_word_answer.")  , quality=60)
+        self.save_image.save('/data/'  +  self.image_file_name.replace(".", "__" + self.question_category + "__" + "--" + self.missing_word + "--" + "___" + str(correct_answer) + "___missing_word_answer.")  , quality=70)
                      
 if __name__ == "__main__" :
     
@@ -152,25 +157,9 @@ if __name__ == "__main__" :
         data = json.load(json_file)
 
         for p in data:
-
             text_org = p['sentence']
             sentence = p['sentence']
-            missing_word = p['missing_word']
-            missing_word_definition = p['missing_word_definition']
-            image_file_name = p['image_file_name']
-            words = p['linguistic_features']    
 
-            answers = list()
-            answers.append(missing_word)
-            answers.append(p['option1'])
-            answers.append(p['option2'])
-            answers.append(p['option3'])
-            
-            random.shuffle(answers)
-            
-            #image = CreateImage("missing_word", "VOCABULARY-ADJECTIVES", text, text_org, answers, missing_word, missing_word_definition, image_file_name)
-            #image.question_generator()
-            
             for question_cat in Settings.QUESTION_CAT_LIST:
                 question = p[question_cat]
       
@@ -181,7 +170,7 @@ if __name__ == "__main__" :
                         text_adj = []
                         missing_word = question["base"]
 
-                        for word in words:   
+                        for word in convert_to_words(sentence):   
                          
                             word['word'] = word['word'].translate(".,!)(?")
                             
@@ -205,10 +194,10 @@ if __name__ == "__main__" :
                                 correct_answer = i
                             
                         print (answers)
-                        image = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, missing_word_definition, image_file_name)
+                        image = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, 'missing_word_definition', filename_generator(1))
                         image.question_generator(correct_answer)
                       
-                        image_a = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, missing_word_definition, image_file_name)
+                        image_a = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, 'missing_word_definition', filename_generator(0))
                         image_a.answer_generator(correct_answer)
 
             time.sleep(1)
