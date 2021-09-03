@@ -23,7 +23,6 @@ def filename_generator(question):
 def convert_to_words(lst):
     return ' '.join(lst).split()
 
-
 class CreateImage:
     """ This class generates question/answer Image Sets """
     
@@ -42,7 +41,6 @@ class CreateImage:
         self.missing_word_definition = missing_word_definition
         self.image_file_name = image_file_name
         self.img, self.save_image = self.random_background_generator()
-
 
     @staticmethod
     def random_background_generator():
