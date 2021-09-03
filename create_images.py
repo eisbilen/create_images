@@ -166,10 +166,17 @@ if __name__ == "__main__" :
                 if len(question) > 1:
                     print('question0', question)
                     for question in question[0]:
+                        
+                        if question.get('base') is None:
+                            print ('it is null')
+                            break
+
                         answers = []
                         text_adj = []
-                        missing_word = question["base"]
+                        
                         print('question', question)
+                        missing_word = question["base"]
+                        
 
                         for word in sentence.split():   
                             print('word', word)

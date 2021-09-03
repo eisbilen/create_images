@@ -11,7 +11,7 @@ ARTICLE_SENTENCES_PROCESSED_JSON_FILE = '/data/data.json'
 IMAGE_FILES_FOR_BOOK = "/data/"
 IMAGE_FILES_FIREBASE = ""
 
-QUESTION_CAT_LIST = ["PREPOSITION" ]
+QUESTION_CAT_LIST = ["PREPOSITION", 'VERB' ]
 
 FIRST_LINE = {
     "missing_word": "Find the Missing Word !",
