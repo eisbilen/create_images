@@ -21,7 +21,7 @@ def filename_generator(question):
     return file_name
 
 def convert_to_words(lst):
-    return ([i for item in lst for i in item.split()])
+    return ' '.join(lst).split()
 
 
 class CreateImage:
@@ -164,20 +164,22 @@ if __name__ == "__main__" :
                 question = p[question_cat]
       
                 if len(question) > 1:
-                    
+                    print('question0', question)
                     for question in question[0]:
                         answers = []
                         text_adj = []
                         missing_word = question["base"]
+                        print('question', question)
 
-                        for word in convert_to_words(sentence):   
+                        for word in sentence.split():   
+                            print('word', word)
                          
-                            word['word'] = word['word'].translate(".,!)(?")
+                            word = word.translate(".,!)(?")
                             
-                            if word['word'] == missing_word:
+                            if word == missing_word:
                                 text_adj.append("____")
                             else:
-                                text_adj.append(word['word'])
+                                text_adj.append(word)
                         
                         text = ' '.join(map(str, text_adj))
                           
@@ -193,7 +195,7 @@ if __name__ == "__main__" :
                             if answer == missing_word:
                                 correct_answer = i
                             
-                        print (answers)
+                        print ('answers', answers)
                         image = CreateImage("missing_word", question_cat.upper(), text, text_org, answers, missing_word, 'missing_word_definition', filename_generator(1))
                         image.question_generator(correct_answer)
                       

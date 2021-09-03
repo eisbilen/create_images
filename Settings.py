@@ -11,7 +11,7 @@ ARTICLE_SENTENCES_PROCESSED_JSON_FILE = '/data/data.json'
 IMAGE_FILES_FOR_BOOK = "/data/"
 IMAGE_FILES_FIREBASE = ""
 
-QUESTION_CAT_LIST = ["preposition", "adverb_particle", "coordinating_conjuction", "modal", "possesive_pronoun", "predeterminer", "wh_determiner", "determiner", "adverb", "adjective", "verb" ]
+QUESTION_CAT_LIST = ["PREPOSITION" ]
 
 FIRST_LINE = {
     "missing_word": "Find the Missing Word !",
